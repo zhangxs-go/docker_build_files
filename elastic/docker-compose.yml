@@ -1,0 +1,45 @@
+version: '3'
+services:
+  es01:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.13.2
+    container_name: es01
+    environment:
+      - discovery.type=single-node
+    #   - node.name=es01
+    #   - cluster.name=es-docker-cluster
+    #   - discovery.seed_hosts=es02,es03
+    #   - cluster.initial_master_nodes=es01,es02,es03
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    volumes:
+      - /home/tingyin/docker_volume/elastic/es01/data:/usr/share/elasticsearch/data
+      - /home/tingyin/docker_volume/elastic/es01/plugins:/usr/share/elasticsearch/plugins
+    ports:
+      - 9200:9200
+      - 9300:9300
+    networks:
+        elastic: {}
+
+  kib01:
+    image: docker.elastic.co/kibana/kibana:7.13.2
+    container_name: kib01
+    ports:
+        - 5601:5601
+    environment:
+        ELASTICSEARCH_URL: http://es01:9200
+        ELASTICSEARCH_HOSTS: '["http://es01:9200"]'
+        I18N_LOCALE: "zh-CN"
+    networks:
+        elastic: {}
+
+# volumes:
+#     data01:
+#         name: data01
+
+networks: 
+    elastic:
+        name: elastic
