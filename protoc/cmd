@@ -1,0 +1,8 @@
+docker run --rm -v `pwd`:/proto -w /proto  dsers/infra-docker-protoc:latest --proto_path=. --go_out=paths=source_relative:. *.proto
+
+
+docker buildx create --name mybuilder --use
+docker buildx build --push --platform=linux/amd64,linux/arm64 -t dsers/infra-docker-protoc:latest .
+
+
+docker buildx build --load --platform=linux/amd64,linux/arm64 -t dsers/infra-docker-protoc:latest .

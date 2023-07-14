@@ -1,0 +1,14 @@
+syntax = "proto3";
+
+package myproto;
+option  go_package = "myproto";  //添加的代码
+
+service Helloserver {
+    rpc SayHello(HelloReq) returns (HelloRsp) {}
+}
+message HelloReq {
+    string Name = 1;
+}
+message HelloRsp {
+    string Msg = 1;
+}
