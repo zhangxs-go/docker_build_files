@@ -1,10 +1,11 @@
 version: "3"
 
 services:
-  redis6:
-    image: 'redis:6-alpine'
+  redis:
+    image: 'redis:${REDIS_VERSION}'
     volumes:
-      - ./conf:/etc/redis
+      - ${REDIS_CONFIG}:/etc/redis/redis.conf
+      - ${REDIS_DATA}:/data
     ports:
       - '6379:6379'
     command: redis-server /etc/redis/redis.conf

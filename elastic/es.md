@@ -1,3 +1,6 @@
+### 安装文档
+https://www.elastic.co/guide/en/elasticsearch/reference/8.8/install-elasticsearch.html
+
 ### 创建索引映射(mapping)
 ```json
 PUT /product-pool
